@@ -1,0 +1,4 @@
+# Ignore private markdown research notes
+*.md
+!README.md
+!README.MD

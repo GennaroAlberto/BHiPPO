@@ -1,0 +1,37 @@
+{
+  "quick": true,
+  "grid": {
+    "seed": [
+      0,
+      1,
+      2
+    ],
+    "T": [
+      1000
+    ],
+    "N": [
+      32
+    ],
+    "lengthscale": [
+      0.1
+    ],
+    "noise_std": [
+      0.25
+    ],
+    "pattern": [
+      "poisson",
+      "blocks",
+      "bursty"
+    ],
+    "missing_frac": [
+      0.5
+    ]
+  },
+  "unhippo_sigma2s": [
+    10000.0,
+    1000000.0,
+    100000000.0,
+    10000000000.0,
+    1000000000000.0
+  ]
+}

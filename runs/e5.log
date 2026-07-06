@@ -1,0 +1,12 @@
+[evidence mass] mean det drift: 3.06e-02; trace(P) log-log slope vs alpha: -1.005 (theory: -1)
+[wallclock] N=16: det 0.041 ms, unhippo 0.023 ms, srif 0.176 ms
+[wallclock] N=32: det 0.051 ms, unhippo 0.046 ms, srif 0.267 ms
+[wallclock] N=64: det 0.071 ms, unhippo 0.112 ms, srif 0.494 ms
+[wallclock] N=128: det 0.154 ms, unhippo 0.485 ms, srif 1.042 ms
+[float32] median |recon_f32 - recon_f64| by (N, gap ratio):
+gap_ratio    2.0      8.0      32.0     128.0
+N                                            
+16        1.66e-02 7.45e-03 1.19e-02 3.91e-02
+32        1.69e-02 8.79e-03 1.10e-02 8.88e-03
+64        1.74e-02 8.84e-03 9.15e-03 6.02e-03
+Wrote E5 CSVs to runs/e5

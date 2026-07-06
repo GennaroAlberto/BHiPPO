@@ -1,0 +1,52 @@
+mode pure seed 0 done
+mode pure seed 1 done
+mode pure seed 2 done
+mode pure seed 3 done
+mode pure seed 4 done
+mode feedback seed 0 done
+mode feedback seed 1 done
+mode feedback seed 2 done
+mode feedback seed 3 done
+mode feedback seed 4 done
+
+=== mode pure: token accuracy by gap bin (chance = 0.167) ===
+bin                  g8_16  g16_32  g32_64  g64_96  g_ood
+method                                                   
+mixture_direct       0.345   0.265   0.242   0.194  0.184
+map_direct           0.326   0.268   0.242   0.194  0.184
+legs_direct          0.291   0.258   0.263   0.255  0.221
+oracle_fixed_direct  0.895   0.856   0.422   0.305  0.237
+worst_fixed_direct   0.243   0.212   0.225   0.189  0.154
+mixture_mlp          0.259   0.223   0.208   0.217  0.157
+s4_bank_mlp          0.280   0.230   0.214   0.189  0.165
+legs_mlp             0.355   0.286   0.301   0.332  0.163
+
+=== mode pure: diagnostics ===
+mode    bin  mass_covering  geo_theta  w_legs   ess  regret_max  log_M_bound
+pure g16_32          0.935    222.583   0.028 1.184       2.303        2.303
+pure g32_64          0.919    223.799   0.024 1.007       2.303        2.303
+pure g64_96          0.980    234.674   0.055 1.000       2.303        2.303
+pure  g8_16          0.977    208.413   0.028 1.404       2.303        2.303
+pure  g_ood          0.987    232.077   0.080 1.000       2.303        2.303
+
+=== mode feedback: token accuracy by gap bin (chance = 0.167) ===
+bin                  g8_16  g16_32  g32_64  g64_96  g_ood
+method                                                   
+mixture_direct       0.307   0.280   0.237   0.194  0.202
+map_direct           0.306   0.276   0.238   0.194  0.202
+legs_direct          0.273   0.244   0.271   0.237  0.223
+oracle_fixed_direct  0.907   0.809   0.440   0.269  0.222
+worst_fixed_direct   0.216   0.203   0.215   0.185  0.168
+mixture_mlp          0.274   0.199   0.211   0.181  0.173
+s4_bank_mlp          0.273   0.235   0.217   0.218  0.166
+legs_mlp             0.278   0.230   0.245   0.247  0.198
+
+=== mode feedback: diagnostics ===
+    mode    bin  mass_covering  geo_theta  w_legs   ess  regret_max  log_M_bound
+feedback g16_32          0.902    210.083   0.035 1.134       2.303        2.303
+feedback g32_64          0.919    223.248   0.030 1.003       2.303        2.303
+feedback g64_96          0.976    224.625   0.086 1.001       2.303        2.303
+feedback  g8_16          0.975    212.134   0.018 1.203       2.303        2.303
+feedback  g_ood          0.980    237.126   0.060 1.000       2.303        2.303
+
+Wrote 800 rows to runs/e3a_full

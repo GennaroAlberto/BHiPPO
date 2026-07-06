@@ -1,0 +1,33 @@
+{
+  "quick": true,
+  "grid": {
+    "seed": [
+      0,
+      1,
+      2
+    ],
+    "T": [
+      512
+    ],
+    "N": [
+      16,
+      32
+    ],
+    "noise_std": [
+      0.05,
+      0.25
+    ],
+    "kind": [
+      "smooth",
+      "local_burst"
+    ],
+    "query": [
+      "global",
+      "recent"
+    ],
+    "temperature": [
+      0.02,
+      0.1
+    ]
+  }
+}

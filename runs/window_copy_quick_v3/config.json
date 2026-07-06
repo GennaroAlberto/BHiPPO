@@ -1,0 +1,44 @@
+{
+  "quick": true,
+  "grid": {
+    "seed": [
+      0,
+      1
+    ],
+    "prefix_len": [
+      10
+    ],
+    "gap_len": [
+      64,
+      200
+    ],
+    "cue_len": [
+      10
+    ],
+    "vocab": [
+      8
+    ],
+    "N": [
+      32
+    ],
+    "theta_min": [
+      1.0
+    ],
+    "theta_max_factor": [
+      2.0
+    ],
+    "num_windows": [
+      12
+    ],
+    "prior": [
+      "log_uniform",
+      "uniform"
+    ],
+    "grid_scale": [
+      "log"
+    ],
+    "temperature": [
+      0.05
+    ]
+  }
+}

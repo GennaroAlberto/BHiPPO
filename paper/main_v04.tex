@@ -1,0 +1,444 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\mut}{\mu^{(t)}}
+\newcommand{\nut}{\nu^{(t)}}
+\newcommand{\At}{\widetilde{A}}
+\newcommand{\Gh}{\widehat{G}}
+\newcommand{\bh}{\widehat{b}}
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+
+\title{Bayesian HiPPO: Exact Online Posterior Memory\\ by Transporting Sufficient Statistics\\\large Working Manuscript v0.4}
+\author{Anonymous Authors}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+HiPPO compresses a signal history into the coefficients of an optimal polynomial approximation under a time-varying measure, and underlies the initialization of modern deep state space models. Deterministic HiPPO assumes noise-free data, a fixed relevance measure, and regular sampling. We develop \emph{Bayesian HiPPO}, which removes all three assumptions while remaining exactly online. Our central result is a \emph{sufficient-statistic transport theorem}: for the HiPPO-LegS basis, the Gram matrix and moment vector of the conjugate Gaussian regression posterior obey a closed Lyapunov-type flow $\dot{\Gh}_t=-\tfrac1t(\At\Gh_t+\Gh_t\At^\top)$ with rank-one jumps $w\,BB^\top$ at observation times, where $\At=A-I$ is the HiPPO matrix shifted by the identity and $B$ is the HiPPO input vector. The discrete-time propagator $\exp(-\log(t_{k+1}/t_k)\At)$ is exact, lower-triangular, and requires no regular grid, yielding an exact square-root information filter over polynomial memory. The transport dynamics coincide with the data-free dynamics that UnHiPPO \citep{lienen2025unhippo} derived and then discarded as numerically unusable; we prove they are exact for the posterior's sufficient statistics and show that, in information form with a proper prior, the apparent divergence is precisely the honest statement that extrapolation is unconstrained by data. Deterministic HiPPO is recovered in the dense-sampling, flat-prior limit via the identity $BB^\top-\At-\At^\top=I$. On top of this filter we derive data-dependent evidence precision from the sampling process, empirical-Bayes noise estimation, and Bayesian inference over the relevance measure itself, including a scale-free log-uniform prior over window lengths with an oracle inequality. The framework handles measurement noise, irregular and missing observations, and unknown timescales in one conjugate model, and reports calibrated uncertainty that deterministic HiPPO and UnHiPPO structurally cannot.
+\end{abstract}
+
+\section{Introduction}
+
+A recurrent model must decide what information from the past remains available in a bounded-dimensional state. HiPPO \citep{gu2020hippo} answers this by storing coefficients of the optimal polynomial approximation of the history $f_{\le t}$ under a time-varying probability measure $\mut$, and by showing that for special measure families the coefficients obey a linear ODE that can be stepped online in $O(N)$ time. This construction underlies the Legendre Memory Unit \citep{voelker2019lmu} and the initialization of deep state space models from LSSL and S4 through Mamba \citep{gu2021lssl,gu2022s4,smith2023s5,gu2023mamba}.
+
+Deterministic HiPPO makes three assumptions that practice routinely violates. First, the signal is observed \emph{without noise}: the input $f(t)$ enters the dynamics as a noise-free control \citep{lienen2025unhippo}. Second, the relevance measure $\mut$ is \emph{fixed in advance}: LegT commits to a window length, LagT to a decay rate, LegS to uniform weight over the whole history. Third, observations arrive on a \emph{regular grid} matching the discretization of the ODE.
+
+This paper removes all three assumptions inside a single conjugate Bayesian model, without giving up exact online computation. The starting observation is decision-theoretic: $\mut$ is a \emph{prior over the past time at which the memory will be queried}, and the HiPPO projection is the corresponding Bayes estimator (Section~\ref{sec:framing}). Placing a Gaussian prior on coefficients and a Gaussian observation model on the data turns HiPPO into the flat-prior posterior mean of a weighted linear regression on the time-varying polynomial design (Section~\ref{sec:conjugate}). The obstacle to making this practical has always been computational: the design $\phi_t(s_i)$ of \emph{every past observation} changes as $t$ grows, so the posterior's sufficient statistics appear to require $O(n)$ recomputation at every step.
+
+Our main result (Section~\ref{sec:transport}) is that no recomputation is needed. For the LegS basis, the time variation of the entire empirical design is generated by a single constant matrix: $\partial_t\phi_t(x)=-\tfrac1t\At\,\phi_t(x)$ pointwise in $x$, with $\At=A-I$ for the HiPPO-LegS matrix $A$. Consequently the Gram matrix and moment vector of the posterior are transported \emph{exactly} by the lower-triangular propagator $T_k=\exp(-\log(t_{k+1}/t_k)\At)$, and each new observation enters as a rank-one update along the fixed vector $B=\phi_t(t)$. The conjugate posterior over polynomial memory therefore admits an exact online recurrence---a square-root information filter---at $O(N^2)$ memory and small polynomial per-step cost, on \emph{arbitrary} observation times.
+
+The transport dynamics are not unfamiliar: rewritten on coefficients they read $\dot c=\tfrac1t(A^\top-I)c$, which is exactly the ``data-free'' equation that \citet{lienen2025unhippo} derived for UnHiPPO by substituting the model's own prediction for the input---and then abandoned, because rolling it forward diverges like a degree-$(N{-}1)$ polynomial, replacing it with a pseudo-inverse-regularized surrogate $A_R$. Section~\ref{sec:unhippo} makes the relationship precise: the equation they discarded is the \emph{exact} transport of the posterior's sufficient statistics under domain extension; the divergence is not a defect but the correct statement that no datum constrains the extrapolation region, and in information form with a proper prior it is handled by the posterior covariance rather than by altering the dynamics. Where UnHiPPO collapses its filter to a data-independent point recurrence and discards the covariance, Bayesian HiPPO keeps the exact dynamics and the calibrated uncertainty.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+    \item \textbf{Sufficient-statistic transport theorem (main result).} The conjugate posterior over HiPPO-LegS coefficients admits an exact online recurrence on irregular observation times: a Lyapunov flow generated by $\At=A-I$ with rank-one injections $w\,BB^\top$, discretized exactly by lower-triangular matrix exponentials. A square-root information-filter implementation follows. Deterministic HiPPO-LegS is recovered in the dense flat-prior limit via the identity $BB^\top-\At-\At^\top=I$. All identities are verified numerically to machine precision.
+    \item \textbf{Exactness where UnHiPPO regularizes.} We prove the transported posterior reconstruction is \emph{identical} on the old domain (domain extension is exact), identify UnHiPPO's discarded dynamics with our exact transport, and replace their pseudo-inverse regularization with principled prior regularization in information form.
+    \item \textbf{Derived, data-dependent uncertainty.} We derive the evidence precision $\kappa$ of coefficient estimates from the sampling process (rate, weights, noise level) rather than leaving it a free hyperparameter, and estimate the noise scale online by empirical Bayes from innovations. The resulting covariance is data-dependent, unlike UnHiPPO's, whose posterior covariance provably contains no information about the observed values.
+    \item \textbf{Learning what to remember.} We treat the relevance measure as an inferable object: exact Bayesian model averaging over a finite measure bank (mixability gives $\log M$ regret for log-loss), and a continuous, scale-free log-uniform prior over LegT window lengths with an oracle inequality whose complexity term is independent of the unknown timescale.
+    \item \textbf{A falsifiable experimental program} targeting the three violated assumptions: noise (head-to-head with UnHiPPO), irregular sampling (where no HiPPO-family baseline applies natively), and unknown timescale (where fixed measures provably cannot adapt).
+\end{enumerate}
+
+\section{Related Work}\label{sec:related}
+
+\paragraph{HiPPO and deep state space models.} HiPPO \citep{gu2020hippo} generalizes the LMU \citep{voelker2019lmu} and provides the initialization used by LSSL \citep{gu2021lssl}, S4 \citep{gu2022s4}, S5 \citep{smith2023s5}, and successors. \citet{gu2022htyh} generalize HiPPO to broad families of time-varying measures and bases; our transport lemma uses precisely the basis-differentiation machinery of that line of work, repurposed from the projection coefficients to the full sufficient statistics of a posterior. Mamba's input-dependent selectivity \citep{gu2023mamba} can be read as a data-dependent relevance measure learned by gradient descent; we instead infer relevance posteriors online with guarantees, and regard the two as complementary. LSSL and S4 initialize per-channel timescales log-uniformly over $[t_{\min},t_{\max}]$; our log-uniform window prior is the probabilistic, adaptive counterpart of that heuristic, with an oracle inequality in place of folklore.
+
+\paragraph{Noise-aware HiPPO.} UnHiPPO \citep{lienen2025unhippo} is the closest work: it models the input as a noisy observation of a latent linear system built from HiPPO dynamics, runs a Kalman filter, and collapses the posterior-mean recurrence into fixed matrices $(\bar A_U,\bar B_U)$ used as an SSM initialization. Section~\ref{sec:unhippo} gives a detailed comparison; briefly, UnHiPPO fixes the measure, requires a regular grid, replaces the exact extension dynamics by a regularized surrogate, and discards the (data-independent) covariance, whereas Bayesian HiPPO keeps the exact dynamics, supports irregular data, makes the covariance data-dependent via empirical Bayes, and infers the measure.
+
+\paragraph{Bayesian filtering and recursive estimation.} Our filter is a square-root information filter \citep{bierman1977,sarkka2019} whose deterministic transition is derived from basis geometry rather than assumed system dynamics. The LagT projection coincides with exponentially-weighted recursive least squares, whose Bayesian treatment is classical \citep{haykin2002adaptive}; the novelty here is the \emph{scaled} (LegS) case, where the design is time-varying and the exact transport is nontrivial. Deep probabilistic state estimation (deep Kalman filters \citep{krishnan2015dkf}, recurrent Kalman networks \citep{becker2019rkn}, variational SSMs) learns dynamics from data; we exploit dynamics available in closed form.
+
+\paragraph{Online learning over measures.} Aggregation over a bank of relevance measures is prediction with expert advice \citep{cesa2006prediction}; with log-loss the exponential-weights posterior at $\eta=1$ is exact Bayesian model averaging and log-loss is mixable, giving constant $\log M$ regret \citep{vovk1998mixability}. The continuous-window bound is a standard PAC-Bayesian/EWA argument \citep{mcallester1999pac}; our contribution is the identification of the right prior (log-uniform over windows) and the scale-free localization property relevant to memory tasks.
+
+\section{The Measure is a Query-Time Prior}\label{sec:framing}
+
+Let $f:\R_+\to\R$ and let $\mut$ be a probability measure on $(-\infty,t]$. HiPPO stores the coefficients of
+\begin{equation}
+    g_t^\star=\arg\min_{g\in\G_N}\int(f(x)-g(x))^2\dd\mut(x),
+    \label{eq:hippo-proj}
+\end{equation}
+where $\G_N$ is spanned by a basis $\phi_t=(\phi_{t,0},\dots,\phi_{t,N-1})^\top$ orthonormal in $L^2(\mut)$, so that $g_t^\star=\phi_t^\top c_t^{\rm H}$ with $c_t^{\rm H}=\int f\phi_t\dd\mut$.
+
+\begin{lemma}[Query-time prior]\label{lem:query}
+Let $S_t\sim\mut$ be a random past time at which the memory will be queried, and $\mathcal R_t(g)=\E[(f(S_t)-g(S_t))^2]$. Then $g_t^\star=\arg\min_{g\in\G_N}\mathcal R_t(g)$: the HiPPO projection is the Bayes estimator under squared loss and query-time prior $\mut$.
+\end{lemma}
+\begin{proof}
+$\mathcal R_t(g)=\int(f-g)^2\dd\mut=\|f-g\|^2_{L^2(\mut)}$, which is \eqref{eq:hippo-proj}.
+\end{proof}
+
+We state this as a lemma, not a theorem: it is a crystallization of framing already implicit in \citet{gu2020hippo}, who describe $\mut$ as specifying ``the importance of each time step'' and motivate LegS as avoiding ``priors on the timescale.'' Its value is that it converts measure choice into prior choice, making measure \emph{inference} (Section~\ref{sec:measures}) the natural next question. In age variables $A_t=t-S_t$: LegT($\theta$) is $A_t\sim\mathrm{Unif}(0,\theta)$, LagT($\lambda$) is $A_t\sim\mathrm{Exp}(\lambda)$, LegS is $S_t=tU$, $U\sim\mathrm{Unif}(0,1)$.
+
+\section{Conjugate Bayesian Projection}\label{sec:conjugate}
+
+Observations are $(s_i,y_i)_{i\ge1}$ with $s_i\le t$, weights $w_i>0$, and
+\begin{equation}
+    y_i=\phi_t(s_i)^\top c+\varepsilon_i,\qquad \varepsilon_i\sim\N(0,\sigma^2/w_i),
+    \label{eq:obsmodel}
+\end{equation}
+independent given $c$. This is a proper likelihood (no continuum integral is needed; the idealized continuum objective of \eqref{eq:hippo-proj} arises as the dense-sampling limit, cf.\ Proposition~\ref{prop:recover}). With prior $c\sim\N(m_0,P_0)$ the posterior is Gaussian, $c\mid\text{data}\sim\N(m_t,P_t)$, with
+\begin{equation}
+    P_t^{-1}=P_0^{-1}+\sigma^{-2}\Gh_t,\qquad
+    m_t=P_t\big(P_0^{-1}m_0+\sigma^{-2}\bh_t\big),
+    \label{eq:posterior}
+\end{equation}
+where the sufficient statistics are
+\begin{equation}
+    \Gh_t=\sum_{s_i\le t} w_i\,\phi_t(s_i)\phi_t(s_i)^\top,
+    \qquad
+    \bh_t=\sum_{s_i\le t} w_i\,\phi_t(s_i)\,y_i.
+    \label{eq:suffstats}
+\end{equation}
+This is standard weighted Bayesian linear regression \emph{except} that the design $\phi_t(s_i)$ of every past observation changes with $t$. Deterministic HiPPO avoids the problem by assuming exact orthonormality ($\Gh_t\propto I$) and dense noise-free data; UnHiPPO avoids it by fixing a surrogate latent dynamics. We now solve it exactly.
+
+\section{Main Result: Exact Transport of Sufficient Statistics}\label{sec:transport}
+
+We work with HiPPO-LegS, the flagship measure. The basis is
+\begin{equation}
+    \phi_{t,n}(x)=\sqrt{2n+1}\,P_n\!\big(2x/t-1\big),\qquad n=0,\dots,N-1,
+\end{equation}
+orthonormal in $L^2(\mut)$ for $\mut=\tfrac1t\mathbf 1_{[0,t]}$, where $P_n$ are Legendre polynomials. Recall the HiPPO-LegS matrices
+\begin{equation}
+    A_{nk}=\begin{cases}\sqrt{(2n+1)(2k+1)}&n>k\\ n+1&n=k\\ 0&n<k\end{cases},
+    \qquad B_n=\sqrt{2n+1},
+\end{equation}
+and define the \textbf{transport generator}
+\begin{equation}
+    \boxed{\ \At \;=\; A-I.\ }
+\end{equation}
+
+\begin{lemma}[Basis flow]\label{lem:flow}
+For every fixed $x\in\R$ (not only $x\in[0,t]$) and $t>0$,
+\begin{equation}
+    \frac{\partial}{\partial t}\phi_t(x)=-\frac1t\,\At\,\phi_t(x).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Write $z=2x/t-1$, so $\partial_t z=-2x/t^2=-(z+1)/t$ and
+$\partial_t\phi_{t,n}(x)=-\tfrac1t\sqrt{2n+1}\,(z+1)P_n'(z)$.
+The classical recurrences $zP_n'=nP_n+P_{n-1}'$ and $P_n'=(2n-1)P_{n-1}+P_{n-2}'$ give, by telescoping,
+\begin{equation}
+    (1+z)P_n'(z)=nP_n(z)+\sum_{k=0}^{n-1}(2k+1)P_k(z).
+\end{equation}
+Multiplying by $\sqrt{2n+1}$ and converting $P_k=\phi_{t,k}/\sqrt{2k+1}$ yields
+$\partial_t\phi_{t,n}=-\tfrac1t\big[n\,\phi_{t,n}+\sum_{k<n}\sqrt{(2n+1)(2k+1)}\,\phi_{t,k}\big]
+=-\tfrac1t(\At\phi_t)_n$, since $\At$ has diagonal $n$ and lower-triangular entries $\sqrt{(2n+1)(2k+1)}$. The argument is a polynomial identity in $z$, hence valid for all real $x$.
+\end{proof}
+
+\begin{lemma}[Exact finite transport; endpoint evaluation]\label{lem:prop}
+For $0<t\le t'$ and all $x\in\R$,
+\begin{equation}
+    \phi_{t'}(x)=T(t\!\to\!t')\,\phi_t(x),\qquad
+    T(t\!\to\!t')=\exp\!\big(-\log(t'/t)\,\At\big),
+\end{equation}
+and $T$ is lower-triangular with diagonal $(t/t')^{\,n}$. Moreover $\phi_t(t)=B$ for every $t$.
+\end{lemma}
+\begin{proof}
+The flow of Lemma~\ref{lem:flow} is linear with generator $-\At/t$; since $\At$ is constant, generators at different times commute and the solution is the matrix exponential of $-\At\int_t^{t'}\dd\tau/\tau$. Triangularity and the diagonal follow because $\At$ is lower-triangular with diagonal $n$. Finally $P_n(1)=1$ gives $\phi_{t,n}(t)=\sqrt{2n+1}=B_n$.
+\end{proof}
+
+\begin{theorem}[Sufficient-statistic transport]\label{thm:transport}
+Let $\Gh_t,\bh_t$ be as in \eqref{eq:suffstats} with fixed weights $w_i$. Between observation times,
+\begin{equation}
+    \frac{\dd}{\dd t}\Gh_t=-\frac1t\big(\At\Gh_t+\Gh_t\At^\top\big),
+    \qquad
+    \frac{\dd}{\dd t}\bh_t=-\frac1t\At\,\bh_t,
+\end{equation}
+and at each observation time $s_k$ the statistics jump by
+\begin{equation}
+    \Gh\mathrel{+}=w_k\,BB^\top,\qquad \bh\mathrel{+}=w_k\,B\,y_k.
+\end{equation}
+Equivalently, in exact discrete form with $\rho_k=t_{k+1}/t_k$ and $T_k=\exp(-\log\rho_k\,\At)$:
+\begin{equation}
+    \Gh_{t_{k+1}}=T_k\,\Gh_{t_k}T_k^\top+w_{k+1}BB^\top,
+    \qquad
+    \bh_{t_{k+1}}=T_k\,\bh_{t_k}+w_{k+1}B\,y_{k+1}.
+    \label{eq:discrete-recurrence}
+\end{equation}
+The posterior \eqref{eq:posterior} computed from these recursions equals the batch posterior computed from scratch at time $t$, for arbitrary (irregular) observation times.
+\end{theorem}
+\begin{proof}
+Differentiate each term of \eqref{eq:suffstats} in $t$ using Lemma~\ref{lem:flow}; the product rule gives the Lyapunov form for $\Gh$ and the linear form for $\bh$. A new observation at $s_k$ contributes $w_k\phi_{s_k}(s_k)\phi_{s_k}(s_k)^\top=w_kBB^\top$ by Lemma~\ref{lem:prop}. The discrete form integrates the flow exactly between jumps by Lemma~\ref{lem:prop}. Equality with the batch statistics holds term by term, since each past term $w_i\phi_t(s_i)\phi_t(s_i)^\top$ is transported exactly.
+\end{proof}
+
+\begin{proposition}[Consistency: recovery of deterministic HiPPO]\label{prop:recover}
+(i) The identity
+\begin{equation}
+    BB^\top-\At-\At^\top=I
+\end{equation}
+holds, and consequently the continuum statistics with Lebesgue weight $\dd\nu=\dd x$ on $[0,t]$, namely $\Gh_t=tI$ and $\bh_t=t\,c_t^{\rm H}$, solve the flow of Theorem~\ref{thm:transport} with the jump term replaced by its continuum limit. (ii) In this dense limit with flat prior $P_0^{-1}\to0$, the posterior mean obeys
+$\dot m_t=-\tfrac1t A\,m_t+\tfrac1t B f(t)$: exactly the HiPPO-LegS ODE. Thus deterministic HiPPO is the noise-free, dense-sampling, flat-prior special case of the filter.
+\end{proposition}
+\begin{proof}
+(i) Off-diagonal: $(BB^\top)_{nk}=\sqrt{(2n+1)(2k+1)}$ equals the $(n,k)$ entry of $\At+\At^\top$ (one of the two terms is lower/upper-triangular there). Diagonal: $(2n+1)-2n=1$. For the flow, $\tfrac{\dd}{\dd t}(tI)=I$ while $-\tfrac1t(\At tI+tI\At^\top)+BB^\top=BB^\top-\At-\At^\top=I$. (ii) With $\Gh_t=tI$, $m_t=\bh_t/t$ and $\dot\bh_t=-\tfrac1t\At\bh_t+Bf(t)$; then
+$\dot m_t=-\tfrac1t m_t+\tfrac1t\dot\bh_t\cdot t/t=-\tfrac1t m_t-\tfrac1t\At m_t+\tfrac1t Bf(t)=-\tfrac1t(\At+I)m_t+\tfrac1t Bf(t)$ and $\At+I=A$.
+\end{proof}
+
+\begin{proposition}[Domain extension is exact]\label{prop:preserve}
+Adopt the transported-prior convention (Remark~\ref{rem:priors}). Let $(m_t,P_t)$ be the posterior at time $t$ and let $(m^-_{t'},P^-_{t'})$ be the transported posterior at $t'>t$ before new data. Then for all $x\in\R$,
+\begin{equation}
+    \phi_{t'}(x)^\top m^-_{t'}=\phi_t(x)^\top m_t,
+    \qquad
+    \phi_{t'}(x)^\top P^-_{t'}\phi_{t'}(x)=\phi_t(x)^\top P_t\phi_t(x):
+\end{equation}
+the posterior over the \emph{function} is unchanged by domain extension; only its coordinates move.
+\end{proposition}
+\begin{proof}
+Coefficients transport contravariantly: matching $\phi_{t'}(x)^\top c'=\phi_t(x)^\top c$ for all $x$ with $\phi_{t'}=T\phi_t$ forces $c'=T^{-\top}c$. Under the transported prior, $m^-_{t'}=T^{-\top}m_t$ and $P^-_{t'}=T^{-\top}P_tT^{-1}$; substitute.
+\end{proof}
+
+\begin{remark}[Two prior conventions]\label{rem:priors}
+The prior term $P_0^{-1}$ in \eqref{eq:posterior} does not transport covariantly with $\Gh_t$, so a choice must be made. \textbf{(a) Transported (function-space) prior:} place the prior once, on the function; its coefficient representation transports by $T^{-\top}$ like everything else. Then the full information pair $(\Lambda_t,\eta_t)=(P_t^{-1},P_t^{-1}m_t)$ obeys the same congruence recurrence as $(\sigma^{-2}\Gh_t,\sigma^{-2}\bh_t)$ and Proposition~\ref{prop:preserve} holds exactly. The transported prior loses precision in high-order directions at rate $(t/t')^{2n}$---the honest statement that the old prior said nothing about the newly extended region. \textbf{(b) Fixed coefficient prior:} keep $P_0^{-1}$ pinned in the current frame; then carry $(\Gh_t,\bh_t)$ by Theorem~\ref{thm:transport} and assemble \eqref{eq:posterior} at query time. Convention (a) gives the cleanest filter; (b) gives stationary regularization. A process-noise variant (inject $\epsilon I$ of fresh precision per step, or equivalently inflate covariance) interpolates between them and yields graceful forgetting.
+\end{remark}
+
+\subsection{Square-root information filter and complexity}\label{sec:srif}
+
+Because $T_k$ is \emph{lower-triangular} and $\Gh$ updates by congruence plus a rank-one term, the filter admits an exact square-root form: if $\Gh_{t_k}=L_kL_k^\top$ with $L_k$ lower-triangular, then $T_kL_k$ is lower-triangular with positive diagonal, hence \emph{is} the Cholesky factor of the transported Gram, and the observation adds a standard $O(N^2)$ Cholesky rank-one update:
+\begin{equation}
+    L_{k+1}=\mathrm{cholupdate}\big(T_kL_k,\ \sqrt{w_{k+1}}\,B\big).
+\end{equation}
+Predictive mean and variance at the current endpoint use $\phi_{t}(t)=B$:
+\begin{equation}
+    \widehat y_{t}=B^\top m^-_{t},\qquad
+    s_{t}=B^\top P^-_{t}B+\sigma^2,
+\end{equation}
+computed by two triangular solves. In the dense flat-prior limit the whole filter collapses to the $O(N)$ deterministic HiPPO recurrence (Proposition~\ref{prop:recover}); the extra cost is the price of carrying uncertainty and is paid only when uncertainty is wanted.
+
+\paragraph{The data path is exponential-free.} The propagator never needs to be applied to data-dependent vectors, because every transported quantity built from $B$ has a closed form:
+
+\begin{lemma}[Closed-form transported injections]\label{lem:closedform}
+For all $\rho>0$,
+\begin{equation}
+    \rho^{-\At}B \;=\; \big(\sqrt{2n+1}\;P_n(2/\rho-1)\big)_{n<N},
+\end{equation}
+computable in $O(N)$ by the Legendre three-term recurrence. In particular the design vectors of all past observations are available directly, $\phi_t(s_i)=(t/s_i)^{-\At}B$, with entries bounded by $\sqrt{2n+1}$ whenever $s_i\in[0,t]$.
+\end{lemma}
+\begin{proof}
+By Lemma~\ref{lem:prop} with $x=s$, $t=s$, $t'=\rho s$: $\rho^{-\At}B=\rho^{-\At}\phi_s(s)=\phi_{\rho s}(s)$, whose $n$-th entry is $\sqrt{2n+1}P_n(2s/(\rho s)-1)$. (Verified numerically to $10^{-13}$ for $\rho$ up to $20$, $N=64$.)
+\end{proof}
+
+Consequently matrix exponentials appear only in the maintenance of the factor $L$, and the per-step cost decomposes into: $O(N)$ for the injection vector, $O(N^2)$ for the rank-one update and triangular solves, and one triangular--triangular product $T_kL_k$, which is $O(N^3/6)$ in exact arithmetic. Three observations put this cubic term in its place. \emph{(i) In practice it is negligible:} the product is dense triangular BLAS-3; measured single-thread times are $2/12/59\,\mu$s per step at $N=32/64/128$, orders of magnitude below the surrounding network computation at the memory sizes where HiPPO layers are used. \emph{(ii) An exact amortized-$O(N^2)$ blocked variant exists for dense streams:} within a block, new observations are held as closed-form rank-one terms (Lemma~\ref{lem:closedform}) and predictive quantities are formed by Woodbury against the block-start factor; the full congruence is performed once per block. With block length $m\asymp N$ the amortized cost is $O(N^2)$ per step and the result is algebraically exact. Its practical scope is limited by conditioning, not algebra: representing an observation in a frame older than itself evaluates $P_n$ outside $[-1,1]$, where values grow like $(2\rho)^{\,n}$, so the block log-span must satisfy $\rho_{\rm blk}^{N}\lesssim10^{6}$ in double precision. \emph{(iii) Reduced-rank factors are principled at large $N$:} transport multiplies information in coordinate $n$ by $\rho^{-2n}$, so the Gram of past data is numerically low-rank---empirically, data one time-doubling old retains $99.9\%$ of its information in rank $\approx N/2$, and two doublings in rank $\approx N/3$ ($N=64$)---so an $N\times r$ factor with $O(N^2 r)$ maintenance (or S4-style DPLR/Cayley application of the propagator, at the cost of a controlled sub-stepping error) covers the large-$N$ regime. \TODO{wall-clock table vs deterministic HiPPO and UnHiPPO; reduced-rank accuracy/rank trade-off curve.}
+
+\paragraph{Numerical stability and the right frame.} The current-time frame is the numerically privileged one: there all design vectors have arguments in $[-1,1]$ and entries bounded by $\sqrt{2n+1}$, and the forward propagator is \emph{contracting} (diagonal $\rho^{-n}\le1$). Every ill-conditioned object in this problem---UnHiPPO's divergent extrapolation, the blocked variant's frame limit, covariance-form blowup---is the same phenomenon: transporting \emph{backwards} in time expands like $(2\rho)^n$. The square-root information form in the current frame never performs a backward transport and never subtracts covariances, so positive-definiteness cannot be lost by cancellation (the failure mode \citet{lienen2025unhippo} report needing float64 and re-symmetrization to control). For very long gaps, step-ratio capping (inserting intermediate transport steps) and the process-noise variant of Remark~\ref{rem:priors} bound the dynamic range. \TODO{empirical stability envelope in $(N,\rho)$; float32 vs float64.}
+
+\subsection{Other measures}
+
+The construction only used one property: the weighted basis is closed under time differentiation, $\partial_t\phi_t(x)=-M(t)\phi_t(x)$ pointwise. This holds for LegS ($M=\At/t$, above), for LagT with the exponentially tilted basis ($M$ constant, where the recurrence reduces to classical exponentially-weighted recursive least squares), and for Fourier-type bases. Sliding-window LegT additionally requires \emph{removing} observations that exit the window---rank-one \emph{downdates}, which are numerically delicate; the practical alternatives are LagT-style soft windows or the measure-mixture machinery of Section~\ref{sec:measures}. We state results for LegS, which is both the flagship HiPPO measure and the case where the time-varying design makes the problem genuinely nontrivial.
+
+\section{Relationship to UnHiPPO}\label{sec:unhippo}
+
+UnHiPPO \citep{lienen2025unhippo} models the input as noisy observations $y_k=B^\top c_k+\varepsilon_k$ of a latent linear system, obtains data-free dynamics by substituting the reconstruction for the input, $\dot c=\tfrac1t(BB^\top-A)c=\tfrac1t(A^\top-I)c$, deems these dynamics unusable because rolling them forward diverges like a degree-$(N{-}1)$ polynomial, and replaces them by a pseudo-inverse-regularized $A_R$ enforcing linear extrapolation. The resulting Kalman filter is then collapsed to its posterior-mean recurrence $(\bar A_U,\bar B_U)$ and used as an SSM initialization; the covariance is discarded, and---as they note---contains no information about the data.
+
+The comparison with our result is sharp, because the objects coincide exactly where they overlap:
+
+\begin{proposition}[UnHiPPO's discarded dynamics are the exact transport]
+On coefficients, the transport of Lemma~\ref{lem:prop} reads $\dot c=\tfrac1t\At^\top c=\tfrac1t(A^\top-I)\,c$, which is precisely UnHiPPO's pre-regularization equation; and both models share the observation map $B^\top$, since $\phi_t(t)=B$.
+\end{proposition}
+\begin{proof}
+Contravariant coefficient transport (proof of Proposition~\ref{prop:preserve}) has generator $+\At^\top/t$, and $\At^\top=A^\top-I$. The identity $BB^\top-A=A^\top-I$ is Proposition~\ref{prop:recover}(i) rearranged.
+\end{proof}
+
+The interpretations differ, and the difference is the point. In UnHiPPO the equation is an \emph{approximation} (the input replaced by its reconstruction) whose divergence is a defect to be engineered away. In Bayesian HiPPO the same equation is the \emph{exact} re-coordinatization of a fixed posterior under domain extension (Proposition~\ref{prop:preserve}): nothing diverges about the inference---the polynomial's behavior beyond the data is simply unconstrained, and the posterior covariance says so. Consequently: (i) no surrogate $A_R$ is needed; the prior performs the regularization that the pseudo-inverse performs ad hoc, and does it with calibrated error bars; (ii) irregular sampling is native, since $T_k$ depends only on the time ratio; (iii) with empirical-Bayes noise estimation (Section~\ref{sec:evidence}) the covariance becomes data-dependent, so uncertainty can be propagated to readouts rather than discarded; (iv) like UnHiPPO, the posterior-mean path can be collapsed into time-varying $(\bar A,\bar B)$ matrices and used as a drop-in SSM initialization---we call this \emph{BayesHiPPO-init} and compare it to $(\bar A_U,\bar B_U)$ in the experiments.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lccc}
+\toprule
+ & HiPPO & UnHiPPO & Bayesian HiPPO \\
+\midrule
+Extension dynamics & exact (dense limit) & regularized surrogate $A_R$ & exact ($\At$) \\
+Noise model & none & Kalman, fixed $\sigma^2$ knob & conjugate, $\widehat\sigma^2$ empirical Bayes \\
+Covariance & --- & data-independent, discarded & data-dependent, propagated \\
+Irregular sampling & no & no (regular grid) & native \\
+Relevance measure & fixed & fixed & inferred (bank / window prior) \\
+Per-step cost & $O(N)$ & $O(N^2)$ (offline collapse) & $O(N^2)$ am.\ / $O(N^3/6)$ tri-BLAS3 (\S\ref{sec:srif}) \\
+\bottomrule
+\end{tabular}
+\caption{Structural comparison. ``Discarded'' covariance: \citet{lienen2025unhippo} note their posterior covariance contains no information about the data and keep only the mean recurrence.}
+\end{table}
+
+\section{Derived Evidence Precision and Empirical Bayes}\label{sec:evidence}
+
+Deterministic projections are invariant to rescaling the measure: the minimizers of $\int(f-g)^2\dd\mut$ and $\int(f-g)^2\dd(\alpha\mut)$ coincide for any $\alpha>0$, so HiPPO cannot distinguish one noisy observation from many consistent ones. The posterior can---but only if its precision is tied to the data-collection process rather than left as a knob. The filter of Section~\ref{sec:transport} does this automatically: evidence enters as one rank-one increment $w_kBB^\top/\sigma^2$ per \emph{actual observation}, so the total information mass is $\alpha_t=\sum_{s_i\le t}w_i$, determined by the sampling rate and weights. For uniform sampling at spacing $\Delta$ with $w\equiv\Delta$, $\alpha_t\approx t$ and the posterior contracts at the classical rate; halving the sampling rate halves the precision with no retuning.
+
+\begin{lemma}[Evidence precision of the projection statistic]
+Under \eqref{eq:obsmodel} with dense uniform weights $w_i=\Delta$ on $[0,t]$, the noise contribution to the normalized statistic $\Gh_t^{-1}\bh_t$ has covariance $\approx(\sigma^2\Delta/t)\,I=\kappa^{-1}I$ with $\kappa=t/(\sigma^2\Delta)$: the abstract ``coefficient noise'' model $Y=c^\star+\varepsilon$, $\varepsilon\sim\N(0,\kappa^{-1}I)$, holds with $\kappa$ \emph{derived} from $(t,\Delta,\sigma^2)$ rather than postulated.
+\end{lemma}
+\begin{proof}
+$\Gh_t\approx tI$ by Proposition~\ref{prop:recover}(i); the noise part of $\bh_t$ is $\sum_i\Delta\,\phi_t(s_i)\varepsilon_i$ with covariance $\sigma^2\Delta\sum_i\Delta\,\phi_t(s_i)\phi_t(s_i)^\top\approx\sigma^2\Delta\,t\,I$; divide by $\Gh_t\approx tI$ twice.
+\end{proof}
+
+The remaining scalar $\sigma^2$ is estimated online by empirical Bayes from standardized innovations: with $e_k=(y_k-B^\top m^-_{t_k})^2/(B^\top P^-_{t_k}B/\sigma^2+1)$, the running average of $e_k$ is an unbiased estimator of $\sigma^2$ under the model, and plugging $\widehat\sigma^2_k$ into the filter makes the posterior covariance \emph{data-dependent}. The prior scale $\tau^2$ is set by marginal-likelihood maximization on a prefix, or absorbed into the process-noise variant. This closes the gap that makes shrinkage-with-a-knob unconvincing: all variance parameters are either derived or estimated, none tuned against test metrics. Standard shrinkage/contraction consequences (exact MSE decomposition, bias--variance split over reconstruction, the rate $\kappa^{-2s/(2s+1)}$ under $N\asymp\kappa^{1/(2s+1)}$) follow as in classical normal-means analysis; we record them in the appendix. \TODO{appendix: port Theorems 5--7 and proofs from v0.3 unchanged.}
+
+\section{Learning What to Remember: Inference over Measures}\label{sec:measures}
+
+Lemma~\ref{lem:query} makes measure choice a prior choice, so uncertainty about \emph{what to remember} should be posterior uncertainty. Let $\{\mu_j\}_{j=1}^M$ be a bank of relevance measures (e.g.\ LegS plus LegT/LagT at several timescales), each carrying its own filter from Section~\ref{sec:transport} with predictive densities $p_j(y_k\mid y_{<k})$.
+
+\paragraph{Exact Bayesian model averaging.} With log-loss $\ell^{(j)}_k=-\log p_j(y_k\mid y_{<k})$, exponential weights at $\eta=1$ are exactly the Bayesian posterior over the bank, and mixability of log-loss gives the \emph{constant} regret bound
+\begin{equation}
+    -\sum_{k\le T}\log\Big(\textstyle\sum_j w^{(j)}_k p_j(y_k\mid y_{<k})\Big)
+    \;\le\;
+    \min_{j}\sum_{k\le T}\ell^{(j)}_k+\log M,
+\end{equation}
+by the standard telescoping of the joint marginal likelihood \citep{vovk1998mixability,cesa2006prediction}. For bounded non-log losses the usual Hoeffding-based $L\sqrt{T\log M/2}$ bound applies; losses must be evaluated under a \emph{common} evaluation measure across components for the comparison to be meaningful.
+
+\paragraph{Continuous window priors.} For LegT the window length $\theta$ is the nuisance parameter par excellence (Copying-style tasks: the relevant $\theta$ is an unknown gap). Placing a prior $\pi$ on $\theta$ and running the exponential-weights posterior $w_t(\theta)\propto\pi(\theta)e^{-\eta\sum_{s<t}\ell_s(\theta)}$ gives the oracle inequality
+\begin{equation}
+    \sum_{t\le T}\int\ell_t\,\dd w_t
+    \le \int\sum_{t\le T}\ell_t\,\dd\rho+\frac{\KL(\rho\|\pi)}{\eta}+\frac{\eta L^2T}{8}
+    \qquad\forall\rho\ll\pi,
+\end{equation}
+by the Donsker--Varadhan argument. Choosing $\pi$ \emph{log-uniform} on $[\theta_{\min},M_\theta]$ and $\rho$ its restriction to a multiplicative neighborhood of the unknown $\theta_\star$ yields
+\begin{equation}
+    \KL(\rho\|\pi)=\log\frac{\log(M_\theta/\theta_{\min})}{\log\big(\sup I_\varepsilon/\inf I_\varepsilon\big)},
+\end{equation}
+independent of the absolute scale of $\theta_\star$: the cost of not knowing the timescale is logarithmic in the number of multiplicative scales searched, in any units. A flat prior on $(0,\infty)$ is not posterior-proper when losses flatten in $\theta$; proper truncations with $M_\theta\asymp T$ are the principled replacement. Marginalizing windows also induces interpretable age-priors: uniform $\pi$ gives $q(a)\propto\log(M_\theta/a)$, log-uniform gives $q(a)\propto 1/a-1/M_\theta$. (Proofs as in v0.3, unchanged.)
+
+This is the probabilistic counterpart of the deterministic log-spaced timescale banks used to initialize LSSL/S4 channels---with two differences we test experimentally: adaptation happens online without gradient training, and the posterior over $\theta$ is itself a diagnostic (its concentration should track the true task timescale).
+
+\section{Downstream Prediction and Calibration}
+
+For a linear readout $r(c)=Wc+a$, the memory posterior induces $r(C_t)\sim\N(Wm_t+a,\,WP_tW^\top)$ exactly; for $L_r$-Lipschitz readouts and $L_\ell$-Lipschitz losses, $|\E\ell(r(C_t),y)-\ell(r(m_t),y)|\le L_\ell L_r\sqrt{\mathrm{tr}(P_t)}$, so coefficient contraction transfers to prediction stability. Calibration (NLL, CRPS, coverage) is a first-class evaluation target: a Bayesian memory that improves point error but is miscalibrated has failed at its distinguishing job.
+
+\section{Experiments}\label{sec:experiments}
+
+The program targets the three violated assumptions; full protocols, baselines, and success criteria are specified in the companion document \texttt{EXPERIMENTS\_PLAN.md}. \TODO{fill in results as they arrive.}
+
+\paragraph{E1: Noise robustness, head-to-head with UnHiPPO.} Replicate the UnHiPPO evaluation (noise at train and inference time, LSSL backbone); compare deterministic HiPPO init, UnHiPPO init, BayesHiPPO-init (collapsed mean recurrence), and the full filter with $\widehat\sigma^2$. Claim to validate: comparable or better denoising \emph{without} the uninterpretable $\sigma^2$ knob, plus calibrated intervals.
+
+\paragraph{E2: Irregular and missing data (uncontested lane).} Irregularly sampled and block-missing signals; the exact filter vs deterministic recurrences with imputation and vs UnHiPPO (grid-bound). Metrics: reconstruction MSE, NLL, 90/95\% coverage. Claim: exactness on arbitrary grids converts directly into accuracy and calibration.
+
+\paragraph{E3: Unknown timescale (headline).} Copying with per-sequence random gaps unseen at test time, and timescale-shift Character Trajectories (train/test at different rates, as in \citet{gu2020hippo}). Window-posterior vs any fixed $\theta$, LegS, and an S4-style deterministic log-spaced bank. Diagnostics: posterior mass near the true gap; regret vs best fixed measure against the $\log M$ bound.
+
+\paragraph{E4: Calibrated forecasting.} Small forecasting suites with linear readouts on the memory posterior vs MC-dropout/ensemble heads on deterministic memory; NLL/CRPS/coverage.
+
+\paragraph{E5: Ablations.} Evidence-mass sensitivity (same normalized measure, varying sampling density: deterministic invariance vs posterior contraction); empirical Bayes on/off; prior conventions of Remark~\ref{rem:priors}; process noise; bank size; float32 vs float64 stability envelope; wall-clock overhead.
+
+\section{Limitations}
+
+The filter costs $O(N^2)$ amortized (with a cheap cubic triangular product in the simplest implementation) against HiPPO's $O(N)$; for the $N\le128$ regime of memory layers this is minor in wall clock, but it is not free at S4 scale, where the collapsed BayesHiPPO-init or the reduced-rank filter is the realistic deployment. The exact blocked $O(N^2)$ variant is conditioning-limited to short block log-spans; the reduced-rank route is approximate, with error controlled by the empirically fast information decay. Sliding-window LegT requires downdates we do not currently make robust. Entries of long-gap propagators grow with $N$; our mitigations are engineering, not theory. The measure posterior optimizes predictive loss, which may misalign with a downstream task loss (a model-selection, not numerical, failure mode). Finally, the transport theorem is specific to bases closed under time differentiation; this covers the HiPPO families but not arbitrary learned bases.
+
+\section{Conclusion}
+
+The measure in HiPPO is a prior over what to remember; the coefficients are the flat-prior posterior mean of a regression whose design moves with time. We showed that this design's motion is generated by a single constant matrix, so the full conjugate posterior---not just its mean---admits an exact online recurrence on arbitrary observation times, in stable square-root form. The dynamics UnHiPPO discarded as divergent are exactly this transport, and the divergence is the posterior's honesty about extrapolation, not a defect. With evidence precision derived from the sampling process, noise scale estimated by empirical Bayes, and the relevance measure itself inferred under a scale-free prior, Bayesian HiPPO turns polynomial memory into calibrated, adaptive inference at quadratic cost---and collapses back to deterministic HiPPO exactly when its assumptions hold.
+
+\begin{thebibliography}{20}
+
+\bibitem[Gu et~al.(2020)]{gu2020hippo}
+Albert Gu, Tri Dao, Stefano Ermon, Atri Rudra, and Christopher R\'e.
+\newblock HiPPO: Recurrent memory with optimal polynomial projections.
+\newblock In \emph{NeurIPS}, 2020.
+
+\bibitem[Voelker et~al.(2019)]{voelker2019lmu}
+Aaron~R. Voelker, Ivana Kaji\'c, and Chris Eliasmith.
+\newblock Legendre memory units: Continuous-time representation in recurrent neural networks.
+\newblock In \emph{NeurIPS}, 2019.
+
+\bibitem[Gu et~al.(2021)]{gu2021lssl}
+Albert Gu, Isys Johnson, Karan Goel, Khaled Saab, Tri Dao, Atri Rudra, and Christopher R\'e.
+\newblock Combining recurrent, convolutional, and continuous-time models with linear state-space layers.
+\newblock In \emph{NeurIPS}, 2021.
+
+\bibitem[Gu et~al.(2022{\natexlab{a}})]{gu2022s4}
+Albert Gu, Karan Goel, and Christopher R\'e.
+\newblock Efficiently modeling long sequences with structured state spaces.
+\newblock In \emph{ICLR}, 2022.
+
+\bibitem[Gu et~al.(2022{\natexlab{b}})]{gu2022htyh}
+Albert Gu, Isys Johnson, Aman Timalsina, Atri Rudra, and Christopher R\'e.
+\newblock How to train your HiPPO: State space models with generalized orthogonal basis projections.
+\newblock In \emph{ICLR}, 2023.
+
+\bibitem[Smith et~al.(2023)]{smith2023s5}
+Jimmy T.H. Smith, Andrew Warrington, and Scott~W. Linderman.
+\newblock Simplified state space layers for sequence modeling.
+\newblock In \emph{ICLR}, 2023.
+
+\bibitem[Gu and Dao(2023)]{gu2023mamba}
+Albert Gu and Tri Dao.
+\newblock Mamba: Linear-time sequence modeling with selective state spaces.
+\newblock \emph{arXiv:2312.00752}, 2023.
+
+\bibitem[Lienen et~al.(2025)]{lienen2025unhippo}
+Marten Lienen, Abdullah Saydemir, and Stephan G\"unnemann.
+\newblock UnHiPPO: Uncertainty-aware initialization for state space models.
+\newblock In \emph{ICML}, 2025.
+
+\bibitem[Kalman(1960)]{kalman1960new}
+Rudolph~E. Kalman.
+\newblock A new approach to linear filtering and prediction problems.
+\newblock \emph{Journal of Basic Engineering}, 82(1):35--45, 1960.
+
+\bibitem[Bierman(1977)]{bierman1977}
+Gerald~J. Bierman.
+\newblock \emph{Factorization Methods for Discrete Sequential Estimation}.
+\newblock Academic Press, 1977.
+
+\bibitem[S\"arkk\"a and Solin(2019)]{sarkka2019}
+Simo S\"arkk\"a and Arno Solin.
+\newblock \emph{Applied Stochastic Differential Equations}.
+\newblock Cambridge University Press, 2019.
+
+\bibitem[Haykin(2002)]{haykin2002adaptive}
+Simon Haykin.
+\newblock \emph{Adaptive Filter Theory}.
+\newblock Prentice Hall, 4th edition, 2002.
+
+\bibitem[Krishnan et~al.(2015)]{krishnan2015dkf}
+Rahul~G. Krishnan, Uri Shalit, and David Sontag.
+\newblock Deep Kalman filters.
+\newblock \emph{arXiv:1511.05121}, 2015.
+
+\bibitem[Becker et~al.(2019)]{becker2019rkn}
+Philipp Becker, Harit Pandya, Gregor Gebhardt, Cheng Zhao, C.~James Taylor, and Gerhard Neumann.
+\newblock Recurrent Kalman networks: Factorized inference in high-dimensional deep feature spaces.
+\newblock In \emph{ICML}, 2019.
+
+\bibitem[Cesa-Bianchi and Lugosi(2006)]{cesa2006prediction}
+Nicol\`o Cesa-Bianchi and G\'abor Lugosi.
+\newblock \emph{Prediction, Learning, and Games}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem[Vovk(1998)]{vovk1998mixability}
+Vladimir Vovk.
+\newblock A game of prediction with expert advice.
+\newblock \emph{Journal of Computer and System Sciences}, 56(2):153--173, 1998.
+
+\bibitem[McAllester(1999)]{mcallester1999pac}
+David~A. McAllester.
+\newblock PAC-Bayesian model averaging.
+\newblock In \emph{COLT}, 1999.
+
+\bibitem[Chihara(2011)]{chihara2011orthogonal}
+Theodore~S. Chihara.
+\newblock \emph{An Introduction to Orthogonal Polynomials}.
+\newblock Dover Publications, 2011.
+
+\bibitem[Trefethen(2019)]{trefethen2019approximation}
+Lloyd~N. Trefethen.
+\newblock \emph{Approximation Theory and Approximation Practice}.
+\newblock SIAM, 2019.
+
+\end{thebibliography}
+
+\end{document}

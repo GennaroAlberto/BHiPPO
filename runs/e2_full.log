@@ -1,0 +1,339 @@
+pattern  missing_frac  noise_std stratum              method  n_points          mse       nll    cov90    cov95     mean_std   sigma2_obs  sigma2_hat
+ blocks           0.3       0.10     all         legs_linear    1000.0 4.960444e-03       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.10     all            legs_zoh    1000.0 6.023436e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.10     all                srif    1000.0 1.087810e-02 -2.034332 0.868300 0.940600 5.362028e-02          NaN    0.010643
+ blocks           0.3       0.10     all           srif_flat    1000.0 1.318939e-02 -2.014370 0.862800 0.936600 5.580503e-02          NaN    0.010643
+ blocks           0.3       0.10     all    srif_transported    1000.0 1.315530e-02 -2.015182 0.862600 0.935700 5.595228e-02          NaN    0.010643
+ blocks           0.3       0.10     all unhippo_linear_best    1000.0 5.600533e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+ blocks           0.3       0.10     all unhippo_native_best    1000.0 4.866501e-03  6.646397 1.000000 1.000000 3.176909e+02 1.000000e+06         NaN
+ blocks           0.3       0.10     all    unhippo_zoh_best    1000.0 4.834191e-02  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ blocks           0.3       0.10  d21_50         legs_linear     126.2 2.078926e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.10  d21_50            legs_zoh     126.2 2.642768e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.10  d21_50                srif     126.2 5.832781e-02 -0.082406 0.743419 0.906239 1.958270e-01          NaN    0.010643
+ blocks           0.3       0.10  d21_50           srif_flat     126.2 7.107953e-02 -0.006811 0.729570 0.878919 2.077778e-01          NaN    0.010643
+ blocks           0.3       0.10  d21_50    srif_transported     126.2 7.136869e-02 -0.007978 0.728184 0.872398 2.086039e-01          NaN    0.010643
+ blocks           0.3       0.10  d21_50 unhippo_linear_best     126.2 1.791802e-02  8.309044 1.000000 1.000000 1.622273e+03 1.000000e+08         NaN
+ blocks           0.3       0.10  d21_50 unhippo_native_best     126.2 1.534037e-02  6.129806 1.000000 1.000000 1.841647e+02 1.000000e+05         NaN
+ blocks           0.3       0.10  d21_50    unhippo_zoh_best     126.2 1.175446e-01 10.012333 1.000000 1.000000 9.000117e+03 1.000000e+10         NaN
+ blocks           0.3       0.10    d50p         legs_linear      27.0 4.979276e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.10    d50p            legs_zoh      27.0 5.610466e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.10    d50p                srif      27.0 1.831584e-01  0.307186 0.833333 1.000000 3.162268e-01          NaN    0.010369
+ blocks           0.3       0.10    d50p           srif_flat      27.0 2.269070e-01  0.389542 0.701389 1.000000 3.397947e-01          NaN    0.010369
+ blocks           0.3       0.10    d50p    srif_transported      27.0 2.249509e-01  0.377778 0.708333 1.000000 3.414035e-01          NaN    0.010369
+ blocks           0.3       0.10    d50p unhippo_linear_best      27.0 4.171296e-02  9.149648 1.000000 1.000000 3.763931e+03 1.000000e+09         NaN
+ blocks           0.3       0.10    d50p unhippo_native_best      27.0 4.259109e-02  6.043709 1.000000 1.000000 1.682644e+02 1.000000e+05         NaN
+ blocks           0.3       0.10    d50p    unhippo_zoh_best      27.0 1.551941e-01 10.881930 1.000000 1.000000 2.132256e+04 1.000000e+11         NaN
+ blocks           0.3       0.25     all         legs_linear    1000.0 1.637628e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.25     all            legs_zoh    1000.0 7.986138e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.25     all                srif    1000.0 3.271314e-02 -1.189241 0.887000 0.947400 1.172359e-01          NaN    0.066400
+ blocks           0.3       0.25     all           srif_flat    1000.0 7.673714e-02 -1.103784 0.864300 0.938000 1.377302e-01          NaN    0.066400
+ blocks           0.3       0.25     all    srif_transported    1000.0 8.116467e-02 -1.100036 0.861900 0.933100 1.399455e-01          NaN    0.066400
+ blocks           0.3       0.25     all unhippo_linear_best    1000.0 1.507452e-02  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+ blocks           0.3       0.25     all unhippo_native_best    1000.0 7.705478e-03  7.519569 1.000000 1.000000 7.487386e+02 1.000000e+07         NaN
+ blocks           0.3       0.25     all    unhippo_zoh_best    1000.0 6.274149e-02  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ blocks           0.3       0.25  d21_50         legs_linear     126.2 6.068284e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.25  d21_50            legs_zoh     126.2 3.491257e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.25  d21_50                srif     126.2 1.697929e-01  0.553976 0.845446 0.922857 3.990531e-01          NaN    0.066400
+ blocks           0.3       0.25  d21_50           srif_flat     126.2 4.104288e-01  0.885962 0.727470 0.896959 5.095307e-01          NaN    0.066400
+ blocks           0.3       0.25  d21_50    srif_transported     126.2 4.415336e-01  0.905151 0.726171 0.869954 5.218944e-01          NaN    0.066400
+ blocks           0.3       0.25  d21_50 unhippo_linear_best     126.2 4.416699e-02  9.158436 1.000000 1.000000 3.814093e+03 1.000000e+09         NaN
+ blocks           0.3       0.25  d21_50 unhippo_native_best     126.2 2.151153e-02  6.886792 1.000000 1.000000 3.925155e+02 1.000000e+06         NaN
+ blocks           0.3       0.25  d21_50    unhippo_zoh_best     126.2 1.462506e-01 10.012333 1.000000 1.000000 9.000117e+03 1.000000e+10         NaN
+ blocks           0.3       0.25    d50p         legs_linear      27.0 7.861535e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.25    d50p            legs_zoh      27.0 5.970624e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.3       0.25    d50p                srif      27.0 4.144342e-01  0.819477 1.000000 1.000000 6.097400e-01          NaN    0.065295
+ blocks           0.3       0.25    d50p           srif_flat      27.0 1.289426e+00  1.272164 0.805556 1.000000 8.321648e-01          NaN    0.065295
+ blocks           0.3       0.25    d50p    srif_transported      27.0 1.371084e+00  1.282198 0.750000 1.000000 8.566138e-01          NaN    0.065295
+ blocks           0.3       0.25    d50p unhippo_linear_best      27.0 6.833007e-02 10.014785 1.000000 1.000000 8.957312e+03 1.000000e+10         NaN
+ blocks           0.3       0.25    d50p unhippo_native_best      27.0 4.573048e-02  6.043709 1.000000 1.000000 1.682644e+02 1.000000e+05         NaN
+ blocks           0.3       0.25    d50p    unhippo_zoh_best      27.0 1.625307e-01 10.881930 1.000000 1.000000 2.132256e+04 1.000000e+11         NaN
+ blocks           0.5       0.10     all         legs_linear    1000.0 4.095376e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.10     all            legs_zoh    1000.0 4.404898e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.10     all                srif    1000.0 1.345648e-01 -1.280369 0.901700 0.938200 2.578951e-01          NaN    0.010883
+ blocks           0.5       0.10     all           srif_flat    1000.0 1.182720e+00 -0.940279 0.858300 0.918200 7.069115e-01          NaN    0.010883
+ blocks           0.5       0.10     all    srif_transported    1000.0 1.680840e+05 -0.022412 0.874500 0.912100 8.212332e+02          NaN    0.010883
+ blocks           0.5       0.10     all unhippo_linear_best    1000.0 4.164734e-02  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+ blocks           0.5       0.10     all unhippo_native_best    1000.0 4.034812e-02  5.549496 1.000000 1.000000 1.048887e+02 1.000000e+04         NaN
+ blocks           0.5       0.10     all    unhippo_zoh_best    1000.0 3.636467e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ blocks           0.5       0.10  d21_50         legs_linear     108.0 5.804215e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.10  d21_50            legs_zoh     108.0 1.355487e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.10  d21_50                srif     108.0 2.007189e-01  0.710961 0.897500 0.900000 4.424937e-01          NaN    0.010883
+ blocks           0.5       0.10  d21_50           srif_flat     108.0 1.941516e+00  1.490572 0.658333 0.826389 8.875644e-01          NaN    0.010883
+ blocks           0.5       0.10  d21_50    srif_transported     108.0 5.464330e+01  2.688072 0.761667 0.806389 1.017402e+01          NaN    0.010883
+ blocks           0.5       0.10  d21_50 unhippo_linear_best     108.0 5.455000e-02  8.312622 1.000000 1.000000 1.627532e+03 1.000000e+08         NaN
+ blocks           0.5       0.10  d21_50 unhippo_native_best     108.0 4.789289e-02  5.627204 1.000000 1.000000 1.115360e+02 1.000000e+04         NaN
+ blocks           0.5       0.10  d21_50    unhippo_zoh_best     108.0 4.968662e-01 10.871532 1.000000 1.000000 2.124868e+04 1.000000e+11         NaN
+ blocks           0.5       0.10    d50p         legs_linear     198.0 1.418967e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.10    d50p            legs_zoh     198.0 1.068217e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.10    d50p                srif     198.0 5.147125e-01  1.187726 0.942759 0.956081 9.004400e-01          NaN    0.010883
+ blocks           0.5       0.10    d50p           srif_flat     198.0 5.596560e+00  2.237002 0.839998 0.894144 2.561191e+00          NaN    0.010883
+ blocks           0.5       0.10    d50p    srif_transported     198.0 4.554192e+05  4.891566 0.845245 0.846597 2.231589e+03          NaN    0.010883
+ blocks           0.5       0.10    d50p unhippo_linear_best     198.0 1.343626e-01  9.127965 1.000000 1.000000 3.692503e+03 1.000000e+09         NaN
+ blocks           0.5       0.10    d50p unhippo_native_best     198.0 1.398337e-01  5.554581 1.000000 1.000000 1.035222e+02 1.000000e+04         NaN
+ blocks           0.5       0.10    d50p    unhippo_zoh_best     198.0 5.493903e-01 11.751003 1.000000 1.000000 5.091173e+04 1.000000e+12         NaN
+ blocks           0.5       0.25     all         legs_linear    1000.0 6.965201e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.25     all            legs_zoh    1000.0 5.514648e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.25     all                srif    1000.0 1.559856e-01 -0.690794 0.908400 0.947900 3.195163e-01          NaN    0.068237
+ blocks           0.5       0.25     all           srif_flat    1000.0 1.320852e+00 -0.257117 0.903600 0.939900 8.966186e-01          NaN    0.068237
+ blocks           0.5       0.25     all    srif_transported    1000.0 8.818866e+05  0.891091 0.874700 0.912100 2.065510e+03          NaN    0.068237
+ blocks           0.5       0.25     all unhippo_linear_best    1000.0 6.622510e-02  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ blocks           0.5       0.25     all unhippo_native_best    1000.0 5.028679e-02  6.658591 1.000000 1.000000 3.219602e+02 1.000000e+06         NaN
+ blocks           0.5       0.25     all    unhippo_zoh_best    1000.0 4.572765e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ blocks           0.5       0.25  d21_50         legs_linear     108.0 1.683015e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.25  d21_50            legs_zoh     108.0 1.703071e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.25  d21_50                srif     108.0 2.694415e-01  0.874584 0.886667 0.906389 6.155980e-01          NaN    0.068237
+ blocks           0.5       0.25  d21_50           srif_flat     108.0 2.541404e+00  1.914992 0.883333 0.902222 1.463822e+00          NaN    0.068237
+ blocks           0.5       0.25  d21_50    srif_transported     108.0 3.261465e+02  3.598304 0.762222 0.805833 2.548624e+01          NaN    0.068237
+ blocks           0.5       0.25  d21_50 unhippo_linear_best     108.0 1.227991e-01  9.148787 1.000000 1.000000 3.777312e+03 1.000000e+09         NaN
+ blocks           0.5       0.25  d21_50 unhippo_native_best     108.0 6.778763e-02  6.166540 1.000000 1.000000 1.911682e+02 1.000000e+05         NaN
+ blocks           0.5       0.25  d21_50    unhippo_zoh_best     108.0 6.336831e-01 10.871532 1.000000 1.000000 2.124868e+04 1.000000e+11         NaN
+ blocks           0.5       0.25    d50p         legs_linear     198.0 2.069207e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.25    d50p            legs_zoh     198.0 1.402453e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.5       0.25    d50p                srif     198.0 5.334954e-01  1.233662 0.953448 0.966892 1.005873e+00          NaN    0.068237
+ blocks           0.5       0.25    d50p           srif_flat     198.0 5.776593e+00  2.406987 0.962838 0.969595 3.197389e+00          NaN    0.068237
+ blocks           0.5       0.25    d50p    srif_transported     198.0 2.392539e+06  5.803067 0.844570 0.846597 5.611754e+03          NaN    0.068237
+ blocks           0.5       0.25    d50p unhippo_linear_best     198.0 1.931366e-01  9.972911 1.000000 1.000000 8.628782e+03 1.000000e+10         NaN
+ blocks           0.5       0.25    d50p unhippo_native_best     198.0 1.557290e-01  5.554582 1.000000 1.000000 1.035222e+02 1.000000e+04         NaN
+ blocks           0.5       0.25    d50p    unhippo_zoh_best     198.0 6.485306e-01 12.684213 1.000000 1.000000 1.293015e+05 1.000000e+13         NaN
+ blocks           0.7       0.10     all         legs_linear    1000.0 7.484146e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.10     all            legs_zoh    1000.0 6.301696e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.10     all                srif    1000.0 1.093526e-01 -1.013061 0.949200 0.970100 3.729970e-01          NaN    0.010729
+ blocks           0.7       0.10     all           srif_flat    1000.0 7.495752e-01 -0.572893 0.952500 0.974200 1.148526e+00          NaN    0.010729
+ blocks           0.7       0.10     all    srif_transported    1000.0 1.502668e+08  1.127181 0.955200 0.976200 3.255446e+03          NaN    0.010729
+ blocks           0.7       0.10     all unhippo_linear_best    1000.0 7.543904e-02  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+ blocks           0.7       0.10     all unhippo_native_best    1000.0 7.773962e-02  5.513858 1.000000 1.000000 1.011761e+02 1.000000e+04         NaN
+ blocks           0.7       0.10     all    unhippo_zoh_best    1000.0 5.323858e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ blocks           0.7       0.10  d21_50         legs_linear     108.0 7.614517e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.10  d21_50            legs_zoh     108.0 1.642478e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.10  d21_50                srif     108.0 6.918066e-02  0.262245 0.985000 0.996667 4.787222e-01          NaN    0.010729
+ blocks           0.7       0.10  d21_50           srif_flat     108.0 5.873786e-01  1.020582 1.000000 1.000000 1.129129e+00          NaN    0.010729
+ blocks           0.7       0.10  d21_50    srif_transported     108.0 1.183878e+03  3.105450 1.000000 1.000000 2.505961e+01          NaN    0.010729
+ blocks           0.7       0.10  d21_50 unhippo_linear_best     108.0 7.378402e-02  5.646125 1.000000 1.000000 1.134277e+02 1.000000e+04         NaN
+ blocks           0.7       0.10  d21_50 unhippo_native_best     108.0 7.398355e-02  5.595025 1.000000 1.000000 1.081219e+02 1.000000e+04         NaN
+ blocks           0.7       0.10  d21_50    unhippo_zoh_best     108.0 7.054347e-01 10.876969 1.000000 1.000000 2.133757e+04 1.000000e+11         NaN
+ blocks           0.7       0.10    d50p         legs_linear     297.2 2.126986e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.10    d50p            legs_zoh     297.2 1.242768e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.10    d50p                srif     297.2 3.136348e-01  1.062883 1.000000 1.000000 9.971553e-01          NaN    0.010729
+ blocks           0.7       0.10    d50p           srif_flat     297.2 2.189977e+00  2.155772 1.000000 1.000000 3.271849e+00          NaN    0.010729
+ blocks           0.7       0.10    d50p    srif_transported     297.2 3.738070e+08  6.232924 1.000000 1.000000 8.198394e+03          NaN    0.010729
+ blocks           0.7       0.10    d50p unhippo_linear_best     297.2 2.032087e-01  9.140294 1.000000 1.000000 3.734875e+03 1.000000e+09         NaN
+ blocks           0.7       0.10    d50p unhippo_native_best     297.2 2.183110e-01  5.512512 1.000000 1.000000 9.936895e+01 1.000000e+04         NaN
+ blocks           0.7       0.10    d50p    unhippo_zoh_best     297.2 7.140436e-01 12.683186 1.000000 1.000000 1.290197e+05 1.000000e+13         NaN
+ blocks           0.7       0.25     all         legs_linear    1000.0 8.204105e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.25     all            legs_zoh    1000.0 6.547863e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.25     all                srif    1000.0 1.471139e-01 -0.424457 0.943500 0.967700 4.283489e-01          NaN    0.066549
+ blocks           0.7       0.25     all           srif_flat    1000.0 7.821557e-01  0.028952 0.952200 0.972100 1.356974e+00          NaN    0.066549
+ blocks           0.7       0.25     all    srif_transported    1000.0 8.796112e+08  2.039978 0.954800 0.975800 8.114697e+03          NaN    0.066549
+ blocks           0.7       0.25     all unhippo_linear_best    1000.0 8.193716e-02  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+ blocks           0.7       0.25     all unhippo_native_best    1000.0 8.583416e-02  5.932620 1.000000 1.000000 1.551963e+02 1.000000e+05         NaN
+ blocks           0.7       0.25     all    unhippo_zoh_best    1000.0 5.532914e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ blocks           0.7       0.25  d21_50         legs_linear     108.0 1.028211e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.25  d21_50            legs_zoh     108.0 1.716287e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.25  d21_50                srif     108.0 1.637205e-01  0.661188 0.968333 0.990000 6.371757e-01          NaN    0.066549
+ blocks           0.7       0.25  d21_50           srif_flat     108.0 6.674835e-01  1.433018 1.000000 1.000000 1.696342e+00          NaN    0.066549
+ blocks           0.7       0.25  d21_50    srif_transported     108.0 7.545626e+03  4.022120 1.000000 1.000000 6.227030e+01          NaN    0.066549
+ blocks           0.7       0.25  d21_50 unhippo_linear_best     108.0 9.634597e-02  8.309788 1.000000 1.000000 1.623028e+03 1.000000e+08         NaN
+ blocks           0.7       0.25  d21_50 unhippo_native_best     108.0 8.873927e-02  5.595025 1.000000 1.000000 1.081219e+02 1.000000e+04         NaN
+ blocks           0.7       0.25  d21_50    unhippo_zoh_best     108.0 7.265525e-01 10.876969 1.000000 1.000000 2.133757e+04 1.000000e+11         NaN
+ blocks           0.7       0.25    d50p         legs_linear     297.2 2.185353e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.25    d50p            legs_zoh     297.2 1.288262e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ blocks           0.7       0.25    d50p                srif     297.2 3.953689e-01  1.149620 0.999710 1.000000 1.050965e+00          NaN    0.066549
+ blocks           0.7       0.25    d50p           srif_flat     297.2 2.213206e+00  2.285015 1.000000 1.000000 3.694807e+00          NaN    0.066549
+ blocks           0.7       0.25    d50p    srif_transported     297.2 2.188154e+09  7.144286 1.000000 1.000000 2.043325e+04          NaN    0.066549
+ blocks           0.7       0.25    d50p unhippo_linear_best     297.2 2.092297e-01  9.140294 1.000000 1.000000 3.734875e+03 1.000000e+09         NaN
+ blocks           0.7       0.25    d50p unhippo_native_best     297.2 2.216152e-01  5.512512 1.000000 1.000000 9.936895e+01 1.000000e+04         NaN
+ blocks           0.7       0.25    d50p    unhippo_zoh_best     297.2 7.085877e-01 12.683186 1.000000 1.000000 1.290197e+05 1.000000e+13         NaN
+ bursty           0.3       0.10     all         legs_linear    1000.0 1.580896e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.10     all            legs_zoh    1000.0 4.146608e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.10     all                srif    1000.0 1.972298e-01 -1.010553 0.904000 0.959200 4.040415e-01          NaN    0.010218
+ bursty           0.3       0.10     all           srif_flat    1000.0 6.847835e-01 -0.680932 0.912100 0.961600 1.331068e+00          NaN    0.010218
+ bursty           0.3       0.10     all    srif_transported    1000.0 3.887688e+10  1.195592 0.878700 0.921800 5.766012e+04          NaN    0.010218
+ bursty           0.3       0.10     all unhippo_linear_best    1000.0 1.599877e-01  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ bursty           0.3       0.10     all unhippo_native_best    1000.0 4.777010e+14 14.010530 1.000000 1.000000 1.095386e+13 1.000000e+13         NaN
+ bursty           0.3       0.10     all    unhippo_zoh_best    1000.0 3.537049e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ bursty           0.3       0.10  d21_50         legs_linear     181.0 5.333334e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.10  d21_50            legs_zoh     181.0 6.029223e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.10  d21_50                srif     181.0 1.827523e-01  0.517238 0.876331 0.984286 6.459435e-01          NaN    0.010218
+ bursty           0.3       0.10  d21_50           srif_flat     181.0 7.361684e-01  1.070838 0.911064 0.975714 1.919190e+00          NaN    0.010218
+ bursty           0.3       0.10  d21_50    srif_transported     181.0 2.926746e+07  3.985247 0.817479 0.857479 2.201369e+03          NaN    0.010218
+ bursty           0.3       0.10  d21_50 unhippo_linear_best     181.0 5.133062e-02  8.367070 1.000000 1.000000 1.736098e+03 1.000000e+08         NaN
+ bursty           0.3       0.10  d21_50 unhippo_native_best     181.0 1.896180e+02 13.490664 1.000000 1.000000 1.748351e+07 1.000000e+13         NaN
+ bursty           0.3       0.10  d21_50    unhippo_zoh_best     181.0 2.492468e-01 10.972520 1.000000 1.000000 2.396990e+04 1.000000e+11         NaN
+ bursty           0.3       0.10    d50p         legs_linear     167.0 7.715684e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.10    d50p            legs_zoh     167.0 1.268365e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.10    d50p                srif     167.0 7.970139e-01  1.317825 0.983019 0.997170 1.300317e+00          NaN    0.010218
+ bursty           0.3       0.10    d50p           srif_flat     167.0 3.605876e+00  2.302116 0.938776 1.000000 4.583814e+00          NaN    0.010218
+ bursty           0.3       0.10    d50p    srif_transported     167.0 2.559491e+11  8.498890 0.865306 0.865306 2.991670e+05          NaN    0.010218
+ bursty           0.3       0.10    d50p unhippo_linear_best     167.0 7.632725e-01  9.222314 1.000000 1.000000 4.112535e+03 1.000000e+09         NaN
+ bursty           0.3       0.10    d50p unhippo_native_best     167.0 2.265565e+15 18.863790 1.000000 1.000000 5.412483e+13 1.000000e+13         NaN
+ bursty           0.3       0.10    d50p    unhippo_zoh_best     167.0 1.094599e+00 11.004242 1.000000 1.000000 2.460289e+04 1.000000e+11         NaN
+ bursty           0.3       0.25     all         legs_linear    1000.0 1.818465e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.25     all            legs_zoh    1000.0 4.699995e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.25     all                srif    1000.0 2.511788e-01 -0.404578 0.911800 0.958200 4.722946e-01          NaN    0.063307
+ bursty           0.3       0.25     all           srif_flat    1000.0 7.359946e-01  0.001177 0.911300 0.965200 1.523685e+00          NaN    0.063307
+ bursty           0.3       0.25     all    srif_transported    1000.0 9.305835e+10  2.072384 0.871900 0.921300 8.934870e+04          NaN    0.063307
+ bursty           0.3       0.25     all unhippo_linear_best    1000.0 1.802947e-01  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ bursty           0.3       0.25     all unhippo_native_best    1000.0 4.725777e+14 14.010530 1.000000 1.000000 1.095386e+13 1.000000e+13         NaN
+ bursty           0.3       0.25     all    unhippo_zoh_best    1000.0 3.902438e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ bursty           0.3       0.25  d21_50         legs_linear     181.0 9.664994e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.25  d21_50            legs_zoh     181.0 7.116046e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.25  d21_50                srif     181.0 3.275434e-01  0.907846 0.893445 0.971541 7.969177e-01          NaN    0.063307
+ bursty           0.3       0.25  d21_50           srif_flat     181.0 1.140606e+00  1.600881 0.910560 1.000000 2.393775e+00          NaN    0.063307
+ bursty           0.3       0.25  d21_50    srif_transported     181.0 1.213470e+08  4.854835 0.793361 0.854398 4.446123e+03          NaN    0.063307
+ bursty           0.3       0.25  d21_50 unhippo_linear_best     181.0 8.546174e-02  9.229122 1.000000 1.000000 4.172614e+03 1.000000e+09         NaN
+ bursty           0.3       0.25  d21_50 unhippo_native_best     181.0 1.864995e+02 13.490664 1.000000 1.000000 1.748351e+07 1.000000e+13         NaN
+ bursty           0.3       0.25  d21_50    unhippo_zoh_best     181.0 2.802483e-01 10.972520 1.000000 1.000000 2.396990e+04 1.000000e+11         NaN
+ bursty           0.3       0.25    d50p         legs_linear     167.0 8.376216e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.25    d50p            legs_zoh     167.0 1.388558e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.3       0.25    d50p                srif     167.0 9.088931e-01  1.423551 0.976415 0.996698 1.380475e+00          NaN    0.063307
+ bursty           0.3       0.25    d50p           srif_flat     167.0 3.117479e+00  2.488018 0.960204 1.000000 4.969261e+00          NaN    0.063307
+ bursty           0.3       0.25    d50p    srif_transported     167.0 9.035067e+11  9.301639 0.865306 0.865306 4.975599e+05          NaN    0.063307
+ bursty           0.3       0.25    d50p unhippo_linear_best     167.0 8.325305e-01  9.222314 1.000000 1.000000 4.112535e+03 1.000000e+09         NaN
+ bursty           0.3       0.25    d50p unhippo_native_best     167.0 2.237759e+15 18.863790 1.000000 1.000000 5.412483e+13 1.000000e+13         NaN
+ bursty           0.3       0.25    d50p    unhippo_zoh_best     167.0 1.162528e+00 11.004242 1.000000 1.000000 2.460289e+04 1.000000e+11         NaN
+ bursty           0.5       0.10     all         legs_linear    1000.0 1.673484e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.10     all            legs_zoh    1000.0 5.098249e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.10     all                srif    1000.0 2.408782e-01 -0.647364 0.923900 0.959700 4.697565e-01          NaN    0.010527
+ bursty           0.5       0.10     all           srif_flat    1000.0 6.435866e-01 -0.142210 0.919800 0.949100 1.527717e+00          NaN    0.010527
+ bursty           0.5       0.10     all    srif_transported    1000.0 2.264435e+09  1.856965 0.894400 0.953100 3.791806e+04          NaN    0.010527
+ bursty           0.5       0.10     all unhippo_linear_best    1000.0 1.690855e-01  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ bursty           0.5       0.10     all unhippo_native_best    1000.0 5.711567e+13 13.960916 1.000000 1.000000 7.198313e+12 1.000000e+13         NaN
+ bursty           0.5       0.10     all    unhippo_zoh_best    1000.0 4.277656e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ bursty           0.5       0.10  d21_50         legs_linear     207.2 5.451316e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.10  d21_50            legs_zoh     207.2 6.602622e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.10  d21_50                srif     207.2 2.315914e-01  0.510281 0.905685 0.942345 6.198310e-01          NaN    0.010527
+ bursty           0.5       0.10  d21_50           srif_flat     207.2 6.454619e-01  1.228019 0.917268 0.919481 1.795407e+00          NaN    0.010527
+ bursty           0.5       0.10  d21_50    srif_transported     207.2 1.244619e+07  3.760502 0.889148 0.948636 2.701396e+03          NaN    0.010527
+ bursty           0.5       0.10  d21_50 unhippo_linear_best     207.2 5.380243e-02  8.352504 1.000000 1.000000 1.706826e+03 1.000000e+08         NaN
+ bursty           0.5       0.10  d21_50 unhippo_native_best     207.2 4.387671e+01 13.407364 1.000000 1.000000 1.231823e+07 1.000000e+13         NaN
+ bursty           0.5       0.10  d21_50    unhippo_zoh_best     207.2 2.862201e-01 10.951549 1.000000 1.000000 2.335404e+04 1.000000e+11         NaN
+ bursty           0.5       0.10    d50p         legs_linear     220.2 6.242475e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.10    d50p            legs_zoh     220.2 1.227734e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.10    d50p                srif     220.2 7.323036e-01  1.241046 0.970052 0.972840 1.181480e+00          NaN    0.010527
+ bursty           0.5       0.10    d50p           srif_flat     220.2 1.945911e+00  2.240875 0.972840 0.972840 4.104110e+00          NaN    0.010527
+ bursty           0.5       0.10    d50p    srif_transported     220.2 9.362934e+09  7.344759 0.889146 0.985106 1.560999e+05          NaN    0.010527
+ bursty           0.5       0.10    d50p unhippo_linear_best     220.2 6.132012e-01  9.180399 1.000000 1.000000 3.928255e+03 1.000000e+09         NaN
+ bursty           0.5       0.10    d50p unhippo_native_best     220.2 2.290818e+14 17.148960 1.000000 1.000000 2.881337e+13 1.000000e+13         NaN
+ bursty           0.5       0.10    d50p    unhippo_zoh_best     220.2 9.884557e-01 10.940390 1.000000 1.000000 2.299145e+04 1.000000e+11         NaN
+ bursty           0.5       0.25     all         legs_linear    1000.0 1.894188e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.25     all            legs_zoh    1000.0 5.438609e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.25     all                srif    1000.0 2.551018e-01 -0.200561 0.952500 0.986200 5.452688e-01          NaN    0.064003
+ bursty           0.5       0.25     all           srif_flat    1000.0 1.224229e+00  0.470101 0.917600 0.947800 1.773856e+00          NaN    0.064003
+ bursty           0.5       0.25     all    srif_transported    1000.0 1.378556e+10  2.760333 0.877500 0.945500 9.675847e+04          NaN    0.064003
+ bursty           0.5       0.25     all unhippo_linear_best    1000.0 1.880281e-01  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ bursty           0.5       0.25     all unhippo_native_best    1000.0 5.641829e+13 13.960916 1.000000 1.000000 7.198313e+12 1.000000e+13         NaN
+ bursty           0.5       0.25     all    unhippo_zoh_best    1000.0 4.478138e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ bursty           0.5       0.25  d21_50         legs_linear     207.2 8.043914e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.25  d21_50            legs_zoh     207.2 7.060219e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.25  d21_50                srif     207.2 2.501417e-01  0.681917 0.972880 0.994248 7.653379e-01          NaN    0.064003
+ bursty           0.5       0.25  d21_50           srif_flat     207.2 1.875413e+00  1.758038 0.915056 0.919481 2.274621e+00          NaN    0.064003
+ bursty           0.5       0.25  d21_50    srif_transported     207.2 3.291118e+07  4.656681 0.852891 0.927733 4.268999e+03          NaN    0.064003
+ bursty           0.5       0.25  d21_50 unhippo_linear_best     207.2 7.540953e-02  9.212311 1.000000 1.000000 4.080360e+03 1.000000e+09         NaN
+ bursty           0.5       0.25  d21_50 unhippo_native_best     207.2 4.321736e+01 13.407364 1.000000 1.000000 1.231823e+07 1.000000e+13         NaN
+ bursty           0.5       0.25  d21_50    unhippo_zoh_best     207.2 2.893969e-01 10.951549 1.000000 1.000000 2.335404e+04 1.000000e+11         NaN
+ bursty           0.5       0.25    d50p         legs_linear     220.2 6.731408e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.25    d50p            legs_zoh     220.2 1.283023e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.5       0.25    d50p                srif     220.2 7.604752e-01  1.279821 0.991325 1.000000 1.253235e+00          NaN    0.064003
+ bursty           0.5       0.25    d50p           srif_flat     220.2 3.112558e+00  2.459650 0.972840 0.972840 4.542762e+00          NaN    0.064003
+ bursty           0.5       0.25    d50p    srif_transported     220.2 5.727529e+10  8.250939 0.859564 0.977660 4.004750e+05          NaN    0.064003
+ bursty           0.5       0.25    d50p unhippo_linear_best     220.2 6.634052e-01  9.180399 1.000000 1.000000 3.928255e+03 1.000000e+09         NaN
+ bursty           0.5       0.25    d50p unhippo_native_best     220.2 2.262458e+14 17.148960 1.000000 1.000000 2.881337e+13 1.000000e+13         NaN
+ bursty           0.5       0.25    d50p    unhippo_zoh_best     220.2 1.018525e+00 10.940390 1.000000 1.000000 2.299145e+04 1.000000e+11         NaN
+ bursty           0.7       0.10     all         legs_linear    1000.0 1.975786e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.10     all            legs_zoh    1000.0 6.435889e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.10     all                srif    1000.0 2.757907e-01 -0.119414 0.941500 0.973200 5.937197e-01          NaN    0.010729
+ bursty           0.7       0.10     all           srif_flat    1000.0 1.139531e+00  0.531489 0.967900 0.985800 2.021711e+00          NaN    0.010729
+ bursty           0.7       0.10     all    srif_transported    1000.0 6.809405e+09  3.561929 0.850700 0.938200 5.170110e+04          NaN    0.010729
+ bursty           0.7       0.10     all unhippo_linear_best    1000.0 1.988783e-01  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ bursty           0.7       0.10     all unhippo_native_best    1000.0 5.420322e+13 13.980988 1.000000 1.000000 4.999823e+12 1.000000e+13         NaN
+ bursty           0.7       0.10     all    unhippo_zoh_best    1000.0 5.401012e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ bursty           0.7       0.10  d21_50         legs_linear     249.8 6.157743e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.10  d21_50            legs_zoh     249.8 6.802359e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.10  d21_50                srif     249.8 1.782652e-01  0.611885 0.964242 0.985659 6.965070e-01          NaN    0.010729
+ bursty           0.7       0.10  d21_50           srif_flat     249.8 1.007300e+00  1.436782 1.000000 1.000000 2.096183e+00          NaN    0.010729
+ bursty           0.7       0.10  d21_50    srif_transported     249.8 1.699833e+08  4.870262 0.814937 0.918219 4.134010e+03          NaN    0.010729
+ bursty           0.7       0.10  d21_50 unhippo_linear_best     249.8 6.012752e-02  8.353822 1.000000 1.000000 1.705680e+03 1.000000e+08         NaN
+ bursty           0.7       0.10  d21_50 unhippo_native_best     249.8 3.993667e+01 13.323043 1.000000 1.000000 7.367218e+06 1.000000e+13         NaN
+ bursty           0.7       0.10  d21_50    unhippo_zoh_best     249.8 3.282598e-01 10.952453 1.000000 1.000000 2.331762e+04 1.000000e+11         NaN
+ bursty           0.7       0.10    d50p         legs_linear     289.4 5.735781e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.10    d50p            legs_zoh     289.4 1.263498e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.10    d50p                srif     289.4 6.755195e-01  1.216196 0.986992 0.999187 1.141768e+00          NaN    0.010729
+ bursty           0.7       0.10    d50p           srif_flat     289.4 2.910811e+00  2.375958 1.000000 1.000000 4.209191e+00          NaN    0.010729
+ bursty           0.7       0.10    d50p    srif_transported     289.4 2.197132e+10  8.270480 0.804084 0.949398 1.683738e+05          NaN    0.010729
+ bursty           0.7       0.10    d50p unhippo_linear_best     289.4 5.611346e-01  9.155031 1.000000 1.000000 3.811150e+03 1.000000e+09         NaN
+ bursty           0.7       0.10    d50p unhippo_native_best     289.4 1.840971e+14 16.148802 1.000000 1.000000 1.670681e+13 1.000000e+13         NaN
+ bursty           0.7       0.10    d50p    unhippo_zoh_best     289.4 9.998580e-01 10.904989 1.000000 1.000000 2.205468e+04 1.000000e+11         NaN
+ bursty           0.7       0.25     all         legs_linear    1000.0 2.239227e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.25     all            legs_zoh    1000.0 6.871517e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.25     all                srif    1000.0 3.493414e-01  0.297947 0.938300 0.976700 6.698197e-01          NaN    0.064706
+ bursty           0.7       0.25     all           srif_flat    1000.0 1.590385e+00  1.007881 0.962600 0.981700 2.326212e+00          NaN    0.064706
+ bursty           0.7       0.25     all    srif_transported    1000.0 3.875499e+10  4.393746 0.892500 0.953200 1.233533e+05          NaN    0.064706
+ bursty           0.7       0.25     all unhippo_linear_best    1000.0 2.208039e-01  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+ bursty           0.7       0.25     all unhippo_native_best    1000.0 5.445995e+13 13.980988 1.000000 1.000000 4.999823e+12 1.000000e+13         NaN
+ bursty           0.7       0.25     all    unhippo_zoh_best    1000.0 5.693247e-01 10.049654 1.000000 1.000000 9.469061e+03 1.000000e+10         NaN
+ bursty           0.7       0.25  d21_50         legs_linear     249.8 9.744554e-02       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.25  d21_50            legs_zoh     249.8 7.318360e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.25  d21_50                srif     249.8 3.108619e-01  0.926871 0.937124 0.992490 8.358334e-01          NaN    0.064706
+ bursty           0.7       0.25  d21_50           srif_flat     249.8 2.015652e+00  1.831640 1.000000 1.000000 2.674997e+00          NaN    0.064706
+ bursty           0.7       0.25  d21_50    srif_transported     249.8 7.343360e+08  5.679620 0.861376 0.926627 7.241096e+03          NaN    0.064706
+ bursty           0.7       0.25  d21_50 unhippo_linear_best     249.8 8.947590e-02  9.211502 1.000000 1.000000 4.066201e+03 1.000000e+09         NaN
+ bursty           0.7       0.25  d21_50 unhippo_native_best     249.8 4.018296e+01 13.323043 1.000000 1.000000 7.367218e+06 1.000000e+13         NaN
+ bursty           0.7       0.25  d21_50    unhippo_zoh_best     249.8 3.467122e-01 10.952453 1.000000 1.000000 2.331762e+04 1.000000e+11         NaN
+ bursty           0.7       0.25    d50p         legs_linear     289.4 6.048731e-01       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.25    d50p            legs_zoh     289.4 1.323360e+00       NaN      NaN      NaN          NaN          NaN         NaN
+ bursty           0.7       0.25    d50p                srif     289.4 7.723131e-01  1.293864 0.981572 0.997290 1.182341e+00          NaN    0.064706
+ bursty           0.7       0.25    d50p           srif_flat     289.4 3.138250e+00  2.469252 1.000000 1.000000 4.554340e+00          NaN    0.064706
+ bursty           0.7       0.25    d50p    srif_transported     289.4 1.256862e+11  9.023792 0.907415 1.000000 4.039124e+05          NaN    0.064706
+ bursty           0.7       0.25    d50p unhippo_linear_best     289.4 5.937493e-01  9.155031 1.000000 1.000000 3.811150e+03 1.000000e+09         NaN
+ bursty           0.7       0.25    d50p unhippo_native_best     289.4 1.849378e+14 16.148802 1.000000 1.000000 1.670681e+13 1.000000e+13         NaN
+ bursty           0.7       0.25    d50p    unhippo_zoh_best     289.4 1.038174e+00 10.904989 1.000000 1.000000 2.205468e+04 1.000000e+11         NaN
+poisson           0.3       0.10     all         legs_linear    1000.0 6.253878e-04       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.3       0.10     all            legs_zoh    1000.0 6.751757e-04       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.3       0.10     all                srif    1000.0 4.022595e-04 -2.536702 0.928500 0.961600 2.148252e-02          NaN    0.010751
+poisson           0.3       0.10     all           srif_flat    1000.0 4.020075e-04 -2.537022 0.928800 0.961600 2.148793e-02          NaN    0.010751
+poisson           0.3       0.10     all    srif_transported    1000.0 3.997746e-04 -2.537917 0.929200 0.961800 2.148653e-02          NaN    0.010751
+poisson           0.3       0.10     all unhippo_linear_best    1000.0 1.743381e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.3       0.10     all unhippo_native_best    1000.0 1.663173e-03  7.570806 1.000000 1.000000 7.840076e+02 1.000000e+07         NaN
+poisson           0.3       0.10     all    unhippo_zoh_best    1000.0 1.778098e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.3       0.25     all         legs_linear    1000.0 2.994533e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.3       0.25     all            legs_zoh    1000.0 3.300408e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.3       0.25     all                srif    1000.0 2.507505e-03 -1.622675 0.927900 0.959800 5.332472e-02          NaN    0.066400
+poisson           0.3       0.25     all           srif_flat    1000.0 2.512113e-03 -1.621983 0.929700 0.960200 5.340750e-02          NaN    0.066400
+poisson           0.3       0.25     all    srif_transported    1000.0 2.484321e-03 -1.624060 0.930000 0.960500 5.338758e-02          NaN    0.066400
+poisson           0.3       0.25     all unhippo_linear_best    1000.0 3.463713e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.3       0.25     all unhippo_native_best    1000.0 3.253252e-03  8.435971 1.000000 1.000000 1.860970e+03 1.000000e+08         NaN
+poisson           0.3       0.25     all    unhippo_zoh_best    1000.0 3.658329e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.5       0.10     all         legs_linear    1000.0 8.554527e-04       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.5       0.10     all            legs_zoh    1000.0 1.044376e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.5       0.10     all                srif    1000.0 6.494319e-04 -2.392773 0.936900 0.972700 2.545419e-02          NaN    0.010606
+poisson           0.5       0.10     all           srif_flat    1000.0 6.496457e-04 -2.392830 0.937000 0.972800 2.546359e-02          NaN    0.010606
+poisson           0.5       0.10     all    srif_transported    1000.0 6.365765e-04 -2.394673 0.938200 0.973100 2.546179e-02          NaN    0.010606
+poisson           0.5       0.10     all unhippo_linear_best    1000.0 1.972113e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.5       0.10     all unhippo_native_best    1000.0 1.823135e-03  7.651419 1.000000 1.000000 8.486497e+02 1.000000e+07         NaN
+poisson           0.5       0.10     all    unhippo_zoh_best    1000.0 2.202997e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.5       0.25     all         legs_linear    1000.0 4.559507e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.5       0.25     all            legs_zoh    1000.0 5.482211e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.5       0.25     all                srif    1000.0 4.026327e-03 -1.481236 0.933500 0.971200 6.286854e-02          NaN    0.064916
+poisson           0.5       0.25     all           srif_flat    1000.0 4.059608e-03 -1.479177 0.932700 0.971500 6.301008e-02          NaN    0.064916
+poisson           0.5       0.25     all    srif_transported    1000.0 3.865564e-03 -1.483689 0.935300 0.972000 6.298500e-02          NaN    0.064916
+poisson           0.5       0.25     all unhippo_linear_best    1000.0 4.630837e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.5       0.25     all unhippo_native_best    1000.0 4.386376e-03  7.651419 1.000000 1.000000 8.486497e+02 1.000000e+07         NaN
+poisson           0.5       0.25     all    unhippo_zoh_best    1000.0 5.518597e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.7       0.10     all         legs_linear    1000.0 1.526769e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.7       0.10     all            legs_zoh    1000.0 2.100328e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.7       0.10     all                srif    1000.0 1.387661e-03 -2.065580 0.915900 0.964900 3.354377e-02          NaN    0.010353
+poisson           0.7       0.10     all           srif_flat    1000.0 1.392996e-03 -2.064690 0.916800 0.964900 3.356871e-02          NaN    0.010353
+poisson           0.7       0.10     all    srif_transported    1000.0 1.363485e-03 -2.067342 0.918500 0.965900 3.356514e-02          NaN    0.010353
+poisson           0.7       0.10     all unhippo_linear_best    1000.0 2.500111e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.7       0.10     all unhippo_native_best    1000.0 2.324433e-03  7.767748 1.000000 1.000000 9.546422e+02 1.000000e+07         NaN
+poisson           0.7       0.10     all    unhippo_zoh_best    1000.0 3.208638e-03  8.351815 1.000000 1.000000 1.706872e+03 1.000000e+08         NaN
+poisson           0.7       0.25     all         legs_linear    1000.0 8.629363e-03       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.7       0.25     all            legs_zoh    1000.0 1.023906e-02       NaN      NaN      NaN          NaN          NaN         NaN
+poisson           0.7       0.25     all                srif    1000.0 8.495822e-03 -1.157140 0.908300 0.958500 8.108907e-02          NaN    0.060961
+poisson           0.7       0.25     all           srif_flat    1000.0 8.702443e-03 -1.150722 0.908000 0.959500 8.144024e-02          NaN    0.060961
+poisson           0.7       0.25     all    srif_transported    1000.0 8.265003e-03 -1.157092 0.911400 0.963500 8.139369e-02          NaN    0.060961
+poisson           0.7       0.25     all unhippo_linear_best    1000.0 8.119346e-03  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+poisson           0.7       0.25     all unhippo_native_best    1000.0 6.504605e-03  7.767748 1.000000 1.000000 9.546422e+02 1.000000e+07         NaN
+poisson           0.7       0.25     all    unhippo_zoh_best    1000.0 9.372789e-03  9.192816 1.000000 1.000000 3.999603e+03 1.000000e+09         NaN
+
+Wrote 32340 rows to runs/e2_full
